@@ -8,8 +8,9 @@ add_library(clsj
 
 target_include_directories(clsj PUBLIC inc)
 
-target_compile_options(clsj PRIVATE -Wall -Wextra -pedantic)
+target_compile_options(clsj PRIVATE -Wall -Wextra -pedantic -fPIC)
 
 target_compile_features(clsj PUBLIC cxx_std_17)
 set_property(TARGET clsj PROPERTY CXX_EXTENSIONS OFF)
 
+add_subdirectory(swig)
