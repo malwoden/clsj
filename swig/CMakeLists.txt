@@ -7,8 +7,7 @@ include(UseSWIG)
 # TODO: replace this, it pollutes the global include path
 INCLUDE_DIRECTORIES(${JNI_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/../inc)
 
-set_source_files_properties(clsj.i PROPERTIES
-        CPLUSPLUS ON)
+set_source_files_properties(clsj.i PROPERTIES CPLUSPLUS ON)
 
 swig_add_library(clsj_swiggy
     LANGUAGE java
@@ -22,4 +21,19 @@ add_jar(
     SOURCES
     ${CMAKE_BINARY_DIR}/swig/clsjJNI.java
     ${CMAKE_BINARY_DIR}/swig/clsj.java
+)
+add_dependencies(clsjJNI clsj_swiggy)
+
+# Build a testing jar which invokes the jni lib to verify it
+add_jar(
+    LibTesterMain
+    SOURCES main.java
+    ENTRY_POINT main
+)
+add_dependencies(LibTesterMain clsjJNI)
+
+add_custom_command(
+    TARGET LibTesterMain
+    POST_BUILD
+    COMMAND ${Java_JAVA_EXECUTABLE} -Djava.library.path=. -jar LibTesterMain.jar "JNI jar call success"
 )

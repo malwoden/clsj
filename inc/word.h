@@ -2,4 +2,4 @@
 
 #include <string>
 
-std::string say_word(const std::string& str);
+void say_word(const std::string& str);
