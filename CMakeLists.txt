@@ -17,4 +17,7 @@ set_property(TARGET clsj PROPERTY CXX_EXTENSIONS OFF)
 
 if(CLSJ_SWIG_JNI)
     add_subdirectory(swig)
+else()
+    install(TARGETS clsj DESTINATION lib)
+    install(FILES inc/word.h DESTINATION include)
 endif()
