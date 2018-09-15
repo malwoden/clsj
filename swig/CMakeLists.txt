@@ -9,6 +9,9 @@ INCLUDE_DIRECTORIES(${JNI_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/../inc)
 
 set_source_files_properties(clsj.i PROPERTIES CPLUSPLUS ON)
 
+set(CMAKE_SWIG_FLAGS -package com.neeul)
+string(REPLACE "." "/" CMAKE_SWIG_OUTDIR com.neeul)
+
 swig_add_library(clsj_swiggy
     LANGUAGE java
     OUTPUT_DIR ${CMAKE_BINARY_DIR}/swig
@@ -19,8 +22,8 @@ target_link_libraries(clsj_swiggy PRIVATE clsj)
 add_jar(
     clsjJNI
     SOURCES
-    ${CMAKE_BINARY_DIR}/swig/clsjJNI.java
-    ${CMAKE_BINARY_DIR}/swig/clsj.java
+    ${CMAKE_BINARY_DIR}/swig/com/neeul/clsjJNI.java
+    ${CMAKE_BINARY_DIR}/swig/com/neeul/clsj.java
 )
 add_dependencies(clsjJNI clsj_swiggy)
 
