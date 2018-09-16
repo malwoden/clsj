@@ -4,19 +4,23 @@ find_package(JNI REQUIRED)
 include(UseJava)
 include(UseSWIG)
 
-# TODO: replace this, it pollutes the global include path
-INCLUDE_DIRECTORIES(${JNI_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/../inc)
+list(APPEND swig_inc_dirs
+        ${JNI_INCLUDE_DIRS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/../inc)
 
-set_source_files_properties(clsj.i PROPERTIES CPLUSPLUS ON)
+set_source_files_properties(clsj.i
+    PROPERTIES
+        CPLUSPLUS ON
+        INCLUDE_DIRECTORIES "${swig_inc_dirs}")
 
 set(CMAKE_SWIG_FLAGS -package com.neeul)
-string(REPLACE "." "/" CMAKE_SWIG_OUTDIR com.neeul)
 
 swig_add_library(clsj_swiggy
     LANGUAGE java
-    OUTPUT_DIR ${CMAKE_BINARY_DIR}/swig
+    OUTPUT_DIR ${CMAKE_BINARY_DIR}/swig/com/neeul
     SOURCES clsj.i)
 
+target_include_directories(clsj_swiggy PRIVATE ${swig_inc_dirs})
 target_link_libraries(clsj_swiggy PRIVATE clsj)
 
 add_jar(
