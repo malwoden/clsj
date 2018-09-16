@@ -17,11 +17,5 @@ if(CLSJ_SWIG_JNI)
     add_subdirectory(swig)
 endif()
 
-if(BUILD_SHARED_LIBS)
-    set(lib_output_dir bin)
-else()
-    set(lib_output_dir lib)
-endif()
-
-install(TARGETS clsj DESTINATION ${lib_output_dir})
+install(TARGETS clsj DESTINATION lib)
 install(FILES inc/word.h DESTINATION include)
