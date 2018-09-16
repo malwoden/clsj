@@ -3,8 +3,6 @@ project(clsj VERSION 0.1.0)
 
 option(CLSJ_SWIG_JNI "Build a swig generated JNI library" OFF)
 
-set(CMAKE_VERBOSE_MAKEFILE ON)
-
 add_library(clsj
         src/word.cpp)
 
@@ -17,7 +15,13 @@ set_property(TARGET clsj PROPERTY CXX_EXTENSIONS OFF)
 
 if(CLSJ_SWIG_JNI)
     add_subdirectory(swig)
-else()
-    install(TARGETS clsj DESTINATION lib)
-    install(FILES inc/word.h DESTINATION include)
 endif()
+
+if(BUILD_SHARED_LIBS)
+    set(lib_output_dir bin)
+else()
+    set(lib_output_dir lib)
+endif()
+
+install(TARGETS clsj DESTINATION ${lib_output_dir})
+install(FILES inc/word.h DESTINATION include)
