@@ -45,5 +45,5 @@ add_custom_command(
     COMMAND ${Java_JAVA_EXECUTABLE} -Djava.library.path=. -jar LibTesterMain.jar "JNI jar call success"
 )
 
-install(FILES ${CMAKE_BINARY_DIR}/swig/clsjJNI.jar DESTINATION lib)
+install(FILES ${CMAKE_BINARY_DIR}/swig/clsjJNI.jar DESTINATION bin)
 install(TARGETS clsj_swiggy DESTINATION lib)
